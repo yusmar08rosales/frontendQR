@@ -1,58 +1,67 @@
 import React, { useState } from "react";
-import "../tabla.css"
-//dependencia
 import Swal from "sweetalert2";
 import { Modal, InputLabel, Button, Box, TextField, InputAdornment } from "@mui/material";
-//iconos
 import CreateIcon from '@mui/icons-material/Create';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const EliminarProduct = ({ lote }) => {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo')); // Recuperamos el nombre de usuario desde localStorage
-    const userName = userInfo?.user;  // Obtenemos el nombre de usuario
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const userName = userInfo?.user;
 
     const [open, setOpen] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null); // Estado para manejar el archivo
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    // Funciones para abrir y cerrar el modal
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    // Manejador de cambio de archivo
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]); // Guarda el archivo seleccionado
+    // validacion antes de abrir componente
+    const handleOpen = () => {
+        Swal.fire({
+            title: '¿Estás seguro que quieres modificar el archivo del producto?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, modificar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setOpen(true);
+            }
+        });
     };
 
-    // Función para manejar la subida de archivo
+    const handleClose = () => setOpen(false);
+
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
     const handleFileUpload = async () => {
         if (!selectedFile) {
             Swal.fire('Error', 'Por favor selecciona un archivo', 'error');
             return;
         }
-    
+
         const formData = new FormData();
-        formData.append('documento', selectedFile);  // El nombre debe ser 'documento'
-        formData.append('lote', lote);  // Agrega el lote
-        formData.append('userName', userName);  // Agrega el nombre del usuario
-    
+        formData.append('documento', selectedFile);
+        formData.append('lote', lote);
+        formData.append('userName', userName);
+
         try {
             const response = await fetch(`https://backendpaginaqr-production.up.railway.app/ModificarProduct/${lote}/${userName}`, {
                 method: 'POST',
                 body: formData,
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al subir el archivo');
             }
-    
+
             Swal.fire('Éxito', 'Archivo subido correctamente', 'success');
-            handleClose();  // Cierra el modal después de subir el archivo
+            handleClose();
         } catch (error) {
             console.error('Error al subir el archivo:', error);
             Swal.fire('Error', 'Hubo un problema al subir el archivo', 'error');
         }
     };
-    
 
     return (
         <>
@@ -83,26 +92,26 @@ const EliminarProduct = ({ lote }) => {
                         <div className="file-upload">
                             <InputLabel htmlFor="upload-file" id="title">Subir archivo</InputLabel>
                             <TextField
-                                    type="file"
-                                    inputProps={{ accept: ".json, .csv" }}
-                                    fullWidth
-                                    color="primary"
-                                    id="archivo"
-                                    onChange={handleFileChange}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <CloudUploadIcon />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    variant="outlined"  // Puedes cambiar el estilo del TextField aquí
-                                />
+                                type="file"
+                                inputProps={{ accept: ".json, .csv" }}
+                                fullWidth
+                                color="primary"
+                                id="archivo"
+                                onChange={handleFileChange}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <CloudUploadIcon />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                variant="outlined"
+                            />
                         </div>
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleFileUpload} // Subir el archivo
+                            onClick={handleFileUpload}
                         >
                             Subir Archivo
                         </Button>
