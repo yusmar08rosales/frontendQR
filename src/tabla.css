@@ -152,3 +152,17 @@ body {
 .css-zwxjex::after {
     border-color: rgb(253, 253, 253) !important;
 }
+
+@media (max-width: 932px) {
+    .list {
+        position: relative;
+        background: #fff;
+        justify-items: center;
+        width: 91%;
+        height: 80%;
+        flex-grow: 1;
+        overflow-y: auto;
+        margin: 2% 0% 2% 5%;
+    }
+    
+}

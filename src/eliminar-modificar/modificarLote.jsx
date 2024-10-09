@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CreateIcon from '@mui/icons-material/Create';
-import { Modal, TextField, Button, InputLabel, InputAdornment, Input, Tooltip } from '@mui/material';
+import { Modal, TextField, Button, InputLabel, InputAdornment, Tooltip } from '@mui/material';
 //iconos
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -34,6 +34,24 @@ const ModificarLote = ({ loteId }) => {
     const [selectedFile, setSelectedFile] = useState(null); // Estado para el archivo
     const [fechaDesembarqueDate, setFechaDesembarqueDate] = useState(null);
     const handleClose = () => setOpen(false);
+
+    // validacion antes de abrir componente
+    const handleOpen = () => {
+        Swal.fire({
+            title: '¿Estás seguro que quieres modificar el archivo del producto?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, modificar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setOpen(true);
+                cargarDatosLote();  // Después, cargamos los datos del lote
+            }
+        });
+    };
 
     const handleManualChangeEmbarque = (event) => {
         setFechaEmbarque(event.target.value);
@@ -100,10 +118,6 @@ const ModificarLote = ({ loteId }) => {
         handleClose(); // Cerrar modal después de enviar
     };
 
-    const handleOpen = () => {
-        setOpen(true); // Primero, se abre el modal
-        cargarDatosLote();  // Después, cargamos los datos del lote
-    };
     const cargarDatosLote = async () => {
         try {
             const response = await fetch(`https://backendpaginaqr-production.up.railway.app/obtenerLote/${loteId}`, {
