@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import RotationWarning from "../../components/warning";
 import '../tabla.css'
 
 //componentes
@@ -48,6 +49,7 @@ const History = () => {
 
     return (
         <>
+        <RotationWarning/>
             <div className="container">
                 <BarraSimple />
 
