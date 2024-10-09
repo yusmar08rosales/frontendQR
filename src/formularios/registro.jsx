@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import RotationWarning from "../../components/warning";
 import '../App.scss';
 import axios from "axios";
 //dependencias
@@ -95,6 +96,7 @@ const Registro = () => {
 
     return (
         <>
+        <RotationWarning/>
             <div className="Container">
                 <div className="botones">
                     <SimpleBar />

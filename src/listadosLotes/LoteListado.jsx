@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import RotationWarning from "../../components/warning";
 
 // Componentes
 import BarraSimple from "../barras/BarraSimple";
@@ -95,7 +96,10 @@ const LoteListado = () => {
     });
 
     return (
-        <div className="container">
+        <>
+        <RotationWarning/>
+        <div className="container bg-black">
+            
             <BarraSimple />
             <div className="list">
                 <div className="filtro">
@@ -126,7 +130,7 @@ const LoteListado = () => {
                     />
                 </div>
 
-                <div className="table">
+                <div className="table bg-black">
                     <TableContainer>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -152,6 +156,7 @@ const LoteListado = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

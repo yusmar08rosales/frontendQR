@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RotationWarning from "../../components/warning";
 import '../App.scss';
 import axios from "axios";
 //dependencias
@@ -132,6 +133,7 @@ const AgregarLote = () => {
 
     return (
         <>
+        <RotationWarning/>
             <div className="Container">
                 <div className="botones">
                     <SimpleBar />
