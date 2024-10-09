@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RotationWarning from "../../components/warning";
 import '../App.scss';
 import axios from "axios";
 //dependencias
@@ -135,6 +136,8 @@ const ModificarLote = ({ loteId }) => {
     }
 
     return (
+        <>
+        <RotationWarning/>
         <div>
             <CreateIcon onClick={handleOpen} style={{ cursor: 'pointer' }} />
 
@@ -317,6 +320,7 @@ const ModificarLote = ({ loteId }) => {
                 </div>
             </Modal>
         </div>
+        </>
     );
 };
 
