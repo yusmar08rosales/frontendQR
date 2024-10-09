@@ -65,37 +65,50 @@ const ModificarLote = ({ loteId }) => {
         setSelectedFile(event.target.files[0]); // Guardar el archivo seleccionado
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {  // Agregar async aquí
         event.preventDefault();
-
-        if (!selectedFile) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Por favor, suba un archivo.',
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('documento', selectedFile);  // Añadir el archivo
-
-        // Añadir los demás campos del formulario
-        formData.append('fechaEmbarque', fechaEmbarqueDate ? fechaEmbarqueDate.toISOString().split('T')[0] : '');
-        formData.append('fechaDesembarque', fechaDesembarqueDate ? fechaDesembarqueDate.toISOString().split('T')[0] : '');
-        formData.append('lote', values.lote);
-        formData.append('origen', values.origen);
-        formData.append('embarque', values.embarque);
-        formData.append('SENIAT', values.SENIAT);
-
-        axios.post(`https://backendpaginaqr-production.up.railway.app/ModificarEmbarque/${loteId}/${userName}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'  // Establecer el encabezado para multipart
+    
+        const { isConfirmed } = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar!',
+            cancelButtonText: 'Cancelar',
+            heightAuto: false,
+        });
+    
+        if (isConfirmed) {
+            if (!selectedFile) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Por favor, suba un archivo.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                return;
             }
-        })
-            .then(res => {
+    
+            const formData = new FormData();
+            formData.append('documento', selectedFile);  // Añadir el archivo
+    
+            // Añadir los demás campos del formulario
+            formData.append('fechaEmbarque', fechaEmbarqueDate ? fechaEmbarqueDate.toISOString().split('T')[0] : '');
+            formData.append('fechaDesembarque', fechaDesembarqueDate ? fechaDesembarqueDate.toISOString().split('T')[0] : '');
+            formData.append('lote', values.lote);
+            formData.append('origen', values.origen);
+            formData.append('embarque', values.embarque);
+            formData.append('SENIAT', values.SENIAT);
+    
+            try {
+                const response = await axios.post(`https://backendpaginaqr-production.up.railway.app/ModificarEmbarque/${loteId}/${userName}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'  // Establecer el encabezado para multipart
+                    }
+                });
                 Swal.fire({
                     title: 'Registrado!',
                     text: 'Lote registrado con éxito!',
@@ -103,8 +116,7 @@ const ModificarLote = ({ loteId }) => {
                     showConfirmButton: false,
                     timer: 3000
                 });
-            })
-            .catch(err => {
+            } catch (err) {
                 console.error('Error al registrar el lote: ', err);
                 Swal.fire({
                     title: 'Error!',
@@ -113,10 +125,11 @@ const ModificarLote = ({ loteId }) => {
                     showConfirmButton: false,
                     timer: 3000
                 });
-            });
-
-        handleClose(); // Cerrar modal después de enviar
+            }
+            handleClose(); // Cerrar modal después de enviar
+        }
     };
+    
 
     const cargarDatosLote = async () => {
         try {
