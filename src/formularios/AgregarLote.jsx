@@ -63,69 +63,83 @@ const AgregarLote = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const { isConfirmed } = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar!',
+            cancelButtonText: 'Cancelar',
+            heightAuto: false,
+        });
 
-        if (!selectedFile) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Por favor, suba un archivo.',
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            return;
-        }
+        if (isConfirmed) {
 
-        // Asegúrate de que las fechas estén correctamente formateadas o que tengan un valor por defecto.
-        const formattedEmbarqueDate = fechaEmbarqueDate ? fechaEmbarqueDate.toISOString().split('T')[0] : '';
-        const formattedDesembarqueDate = fechaDesembarqueDate ? fechaDesembarqueDate.toISOString().split('T')[0] : '';
+            if (!selectedFile) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Por favor, suba un archivo.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                return;
+            }
 
-        const formData = new FormData();
-        formData.append('id', values.id);
-        formData.append('lote', values.lote);
-        formData.append('fechaEmbarque', formattedEmbarqueDate); // Usar la fecha formateada
-        formData.append('origen', values.origen);
-        formData.append('embarque', values.embarque);
-        formData.append('SENIAT', values.SENIAT);
-        formData.append('fechaDesembarque', formattedDesembarqueDate); // Usar la fecha formateada
-        formData.append('documento', selectedFile); // Añadir el archivo
+            // Asegúrate de que las fechas estén correctamente formateadas o que tengan un valor por defecto.
+            const formattedEmbarqueDate = fechaEmbarqueDate ? fechaEmbarqueDate.toISOString().split('T')[0] : '';
+            const formattedDesembarqueDate = fechaDesembarqueDate ? fechaDesembarqueDate.toISOString().split('T')[0] : '';
 
-        try {
-            console.log("registro de nuevo embarque");
-            const res = await axios.post(`https://backendpaginaqr-production.up.railway.app/registroLote/${userName}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            const formData = new FormData();
+            formData.append('id', values.id);
+            formData.append('lote', values.lote);
+            formData.append('fechaEmbarque', formattedEmbarqueDate); // Usar la fecha formateada
+            formData.append('origen', values.origen);
+            formData.append('embarque', values.embarque);
+            formData.append('SENIAT', values.SENIAT);
+            formData.append('fechaDesembarque', formattedDesembarqueDate); // Usar la fecha formateada
+            formData.append('documento', selectedFile); // Añadir el archivo
+
+            try {
+                console.log("registro de nuevo embarque");
+                const res = await axios.post(`https://backendpaginaqr-production.up.railway.app/registroLote/${userName}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                console.log(res);
+
+                Swal.fire({
+                    title: 'Registrado!',
+                    text: 'Lote registrado con éxito!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            } catch (err) {
+                console.error('Error al registrar el lote: ', err);
+
+                // Verificar si el error es debido a que el lote ya está registrado
+                if (err.response && err.response.data && err.response.data.error === "Lote ya registrado") {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Lote ya registrado.',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Hubo un problema al registrar el lote.',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 }
-            });
-
-            console.log(res);
-
-            Swal.fire({
-                title: 'Registrado!',
-                text: 'Lote registrado con éxito!',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        } catch (err) {
-            console.error('Error al registrar el lote: ', err);
-
-            // Verificar si el error es debido a que el lote ya está registrado
-            if (err.response && err.response.data && err.response.data.error === "Lote ya registrado") {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Lote ya registrado.',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Hubo un problema al registrar el lote.',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
             }
         }
     };
@@ -133,7 +147,7 @@ const AgregarLote = () => {
 
     return (
         <>
-        <RotationWarning/>
+            <RotationWarning />
             <div className="Container">
                 <div className="botones">
                     <SimpleBar />
