@@ -154,6 +154,7 @@ body {
 }
 
 @media (max-width: 932px) {
+<<<<<<< HEAD
     .list {
         position: relative;
         background: #fff;
@@ -165,4 +166,13 @@ body {
         margin: 2% 0% 2% 5%;
     }
     
+=======
+    .list{
+        width: 94%;
+        height: 80%;
+        flex-grow: 1;
+        overflow-y: auto;
+        margin: 2% 0% 2% 3%;
+    }
+>>>>>>> 85799d3e375f77cde54f3076d163c4ff83037dac
 }

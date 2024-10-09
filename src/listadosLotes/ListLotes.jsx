@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../tabla.css'
+import RotationWarning from "../../components/warning";
 
 //componentes
 import BarraSupe from "../barras/BarraSupe";
@@ -83,6 +84,8 @@ const ListaLotes = () => {
     }, []);
 
     return (
+        <>
+        <RotationWarning/>
         <div className="container">
             <BarraSupe />
 
@@ -169,6 +172,7 @@ const ListaLotes = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
