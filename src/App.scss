@@ -169,3 +169,19 @@ Caja de inicio
 .css-jh47zj-MuiButtonBase-root-MuiButton-root{
   margin: 0% 40% !important;
 }
+#boton{
+  margin: 0px !important;
+}
+
+@media (max-width: 932px) {
+  .imgBox{
+    height: 105px;
+    margin: 0% 35% 5% 21%;
+  }
+}
+@media (max-width: 430px) {
+  .modal {
+    width: 60vw !important;
+    background-color: #ffffff00;
+  }
+}
