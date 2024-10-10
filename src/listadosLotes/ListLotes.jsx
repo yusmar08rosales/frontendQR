@@ -104,6 +104,7 @@ const ListaLotes = () => {
                         margin='normal'
                         variant='outlined'
                         placeholder='Filtro'
+                        id="filtro"
                         value={filtro}
                         onChange={handleFiltroChange}
                         InputProps={{

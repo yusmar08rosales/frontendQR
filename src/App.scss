@@ -56,6 +56,10 @@ Caja de inicio
       padding: 2rem 0;
     }
 
+    &_contents {
+      border-bottom: 1px solid #ffffff;
+      padding: 1rem 0;
+    }
     &_footer {
       padding: 2rem 0;
       padding-bottom: 0;
@@ -163,5 +167,5 @@ Caja de inicio
   }
 }
 .css-jh47zj-MuiButtonBase-root-MuiButton-root{
-  margin: 2% 40% !important;
+  margin: 0% 40% !important;
 }

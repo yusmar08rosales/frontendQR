@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import RotationWarning from "../../components/warning";
 import '../App.scss';
 import axios from "axios";
 //dependencias
@@ -61,16 +60,26 @@ const Registro = () => {
                 );
             })
             .catch(err => {
-                console.error('Error al registrar usuarios: ', err);
-                Swal.fire(
-                    {
+
+                // Manejar el error de usuario ya existente
+                if (err.response && err.response.status === 400 && err.response.data.error === "El nombre de usuario ya existe.") {
+                    Swal.fire({
                         title: 'Error!',
-                        text: 'Hubo un problema al registrar el Usuario.',
+                        text: 'El nombre de usuario ya existe. Por favor, elija otro.',
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 3000
-                    }
-                );
+                    });
+                } else {
+                    // Manejar otros erroresSwal.fire(
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Hubo un problema al registrar el usuario.',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
             })
     };
 
@@ -96,7 +105,6 @@ const Registro = () => {
 
     return (
         <>
-        <RotationWarning/>
             <div className="Container">
                 <div className="botones">
                     <SimpleBar />
@@ -108,33 +116,37 @@ const Registro = () => {
                         <h2 className="modal_header-title">REGISTRAR</h2>
                     </header>
 
-                    <main className="modal_content">
+                    <main className="modal_contents">
                         <form onSubmit={handleSubmit}>
-                            <TextField
-                                fullWidth
-                                autoFocus
-                                type='text'
-                                color='primary'
-                                margin='normal'
-                                variant='outlined'
-                                label='Usuario'
-                                placeholder='Usuario'
-                                value={values.user}
-                                style={{ backgroundColor: '#ffffff4d', borderRadius: '3px'}}
-                                onChange={e => setValues({ ...values, user: e.target.value })}
-                            />
-                            <TextField
-                                fullWidth
-                                type='password'
-                                color='primary'
-                                margin='normal'
-                                variant='outlined'
-                                label='Contraseña'
-                                placeholder='Contraseña'
-                                value={values.password}
-                                style={{ backgroundColor: '#ffffff4d', borderRadius: '3px'}}
-                                onChange={e => setValues({ ...values, password: e.target.value })}
-                            />
+                            <div className="form-row">
+                                <TextField
+                                    fullWidth
+                                    autoFocus
+                                    type='text'
+                                    color='primary'
+                                    margin='normal'
+                                    variant='outlined'
+                                    label='Usuario'
+                                    placeholder='Usuario'
+                                    value={values.user}
+                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px' }}
+                                    onChange={e => setValues({ ...values, user: e.target.value })}
+                                />
+                                <TextField
+                                    fullWidth
+                                    type='password'
+                                    color='primary'
+                                    margin='normal'
+                                    variant='outlined'
+                                    label='Contraseña'
+                                    placeholder='Contraseña'
+                                    value={values.password}
+                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px' }}
+                                    onChange={e => setValues({ ...values, password: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="form-row">
                             <TextField
                                 fullWidth
                                 type='email'
@@ -144,15 +156,15 @@ const Registro = () => {
                                 label='Correo'
                                 placeholder='Correo'
                                 value={values.correo}
-                                style={{ backgroundColor: '#ffffff4d', borderRadius: '3px'}}
+                                style={{ backgroundColor: '#ffffff4d', borderRadius: '3px' }}
                                 onChange={e => setValues({ ...values, correo: e.target.value })}
                             />
                             <FormControl fullWidth>
-                                <InputLabel>Rol</InputLabel>
+                                <InputLabel id="nombre">Rol</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     value={values.role}
-                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px', color: '#fff'}}
+                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px', color: '#fff', marginTop:'16px' }}
                                     label="Rol"
                                     onChange={e => setValues({ ...values, role: e.target.value })}
                                 >
@@ -161,6 +173,7 @@ const Registro = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            </div>
                         </form>
                     </main>
 

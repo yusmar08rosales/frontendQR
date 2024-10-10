@@ -64,7 +64,7 @@ const AgregarLote = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { isConfirmed } = await Swal.fire({
-            title: '¿Estás seguro?',
+            title: '¿Estás seguro que quieres agregar lote?',
             text: "Esta acción no se puede deshacer",
             icon: 'warning',
             showCancelButton: true,
@@ -158,7 +158,7 @@ const AgregarLote = () => {
                         <h2 className="modal_header-title">Agregar Lotes</h2>
                     </header>
 
-                    <main className="modal_content">
+                    <main className="modal_contents">
                         <form onSubmit={handleSubmit}>
                             <div className="form-row">
                                 <TextField

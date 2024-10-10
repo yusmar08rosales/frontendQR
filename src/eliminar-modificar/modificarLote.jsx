@@ -167,7 +167,7 @@ const ModificarLote = ({ loteId }) => {
                             <h2 className="modal_header-title">Modificar Lote</h2>
                         </header>
 
-                        <main className="modal_content">
+                        <main className="modal_contents">
                             <form onSubmit={handleSubmit}>
                                 <div className="form-row">
                                     <TextField

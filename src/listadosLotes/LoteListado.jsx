@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import '../tabla.css'
 import { useLocation } from "react-router-dom";
 import RotationWarning from "../../components/warning";
 
@@ -118,6 +119,7 @@ const LoteListado = () => {
                         margin='normal'
                         variant='outlined'
                         placeholder='Filtro'
+                        id="filtro"
                         value={filtro}
                         onChange={handleFiltroChange}
                         InputProps={{
