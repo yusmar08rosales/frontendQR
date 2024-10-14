@@ -76,12 +76,17 @@ body {
 #upload-file,
 #title,
 #archivo, 
-#filtro {
+#filtro,  #pass {
     color: black !important;
 }
 
 #nombre{
     margin-top: 16px;
+}
+
+#passwiord{
+    color: black !important;
+    padding: 0% !important;
 }
 
 .datepicker-container {
