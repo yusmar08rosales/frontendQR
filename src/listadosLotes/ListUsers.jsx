@@ -75,7 +75,7 @@ const ListUsers = () => {
             });
             return;
         }
-    
+
         try {
             // Asegúrate de pasar `selectedUser` como userOrEmail
             const response = await axios.post("https://backendpaginaqr-production.up.railway.app/actualizarContrasena", {
@@ -195,7 +195,7 @@ const ListUsers = () => {
 
             {/* Modal para actualizar contraseña */}
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-                <DialogTitle style={{ textAlign: "center", color:"#fff" }}>Actualizar Contraseña</DialogTitle>
+                <DialogTitle style={{ textAlign: "center", color: "#fff" }}>Actualizar Contraseña</DialogTitle>
                 <DialogContent>
                     <TextField
                         fullWidth

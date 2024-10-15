@@ -147,32 +147,32 @@ const Registro = () => {
                             </div>
 
                             <div className="form-row">
-                            <TextField
-                                fullWidth
-                                type='email'
-                                color='primary'
-                                margin='normal'
-                                variant='outlined'
-                                label='Correo'
-                                placeholder='Correo'
-                                value={values.correo}
-                                style={{ backgroundColor: '#ffffff4d', borderRadius: '3px' }}
-                                onChange={e => setValues({ ...values, correo: e.target.value })}
-                            />
-                            <FormControl fullWidth>
-                                <InputLabel id="nombre">Rol</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    value={values.role}
-                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px', color: '#fff', marginTop:'16px' }}
-                                    label="Rol"
-                                    onChange={e => setValues({ ...values, role: e.target.value })}
-                                >
-                                    {objRoles.map((value, index) => (
-                                        <MenuItem key={index} value={value.rol}>{value.rol}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                                <TextField
+                                    fullWidth
+                                    type='email'
+                                    color='primary'
+                                    margin='normal'
+                                    variant='outlined'
+                                    label='Correo'
+                                    placeholder='Correo'
+                                    value={values.correo}
+                                    style={{ backgroundColor: '#ffffff4d', borderRadius: '3px' }}
+                                    onChange={e => setValues({ ...values, correo: e.target.value })}
+                                />
+                                <FormControl fullWidth>
+                                    <InputLabel id="nombre">Rol</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        value={values.role}
+                                        style={{ backgroundColor: '#ffffff4d', borderRadius: '3px', color: '#fff', marginTop: '16px' }}
+                                        label="Rol"
+                                        onChange={e => setValues({ ...values, role: e.target.value })}
+                                    >
+                                        {objRoles.map((value, index) => (
+                                            <MenuItem key={index} value={value.rol}>{value.rol}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             </div>
                         </form>
                     </main>
